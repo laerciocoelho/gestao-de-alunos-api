@@ -1,10 +1,10 @@
-name: Testes de API
+name: Testes Automatizados
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
@@ -12,14 +12,14 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:7
+        image: mongo:6.0
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="mongosh --eval 'db.adminCommand({ ping: 1 })'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout do código
@@ -28,13 +28,23 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: '20'
+          cache: 'npm'
 
       - name: Instalar dependências
         run: npm ci
 
-      - name: Executar testes
+      - name: Criar .env para a pipeline
+        run: |
+          echo "PORT=3000" >> .env
+          echo "MONGODB_URI=mongodb://127.0.0.1:27017/gestao-de-alunos" >> .env
+          echo "BASE_URL=http://localhost:3000" >> .env
+
+      - name: Subir a API em segundo plano
+        run: npm start &
+
+      - name: Aguardar a API responder
+        run: npx wait-on http://localhost:3000 --timeout 30000
+
+      - name: Rodar os testes automatizados
         run: npm test
-        env:
-          MONGODB_URI: mongodb://127.0.0.1:27017/gestao-de-alunos-test

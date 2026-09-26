@@ -1,0 +1,17 @@
+{
+  "admin": {
+    "email": "admin@escola.com",
+    "senha": "admin123"
+  },
+  "novoAluno": {
+    "nome": "Fernanda Rocha",
+    "prefixoEmail": "fernanda.rocha.teste",
+    "dominioEmail": "example.com",
+    "matriculaBase": "2025",
+    "senha": "senha123"
+  },
+  "disciplinaId": "disciplina-matematica",
+  "trabalho": {
+    "titulo": "Trabalho Automatizado - Lista de Exercicios"
+  }
+}
