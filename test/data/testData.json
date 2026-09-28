@@ -1,7 +1,9 @@
 {
   "admin": {
     "email": "admin@escola.com",
-    "senha": "admin123"
+    "senha": "admin123",
+    "senhaInvalida": "senha-incorreta"
+    
   },
   "novoAluno": {
     "nome": "Fernanda Rocha",

@@ -30,6 +30,6 @@ export async function loginAsAluno({ email, senha }) {
 
   return {
     token: response.body.token,
-    alunoId: response.body.id,
+    alunoId: response.body.usuario?.id,
   };
 }
